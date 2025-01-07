@@ -1,0 +1,27 @@
+{
+  "name": "bookkeeping",
+  "version": "1.0.0",
+  "description": "Bookkeeping service is responsible to keep each employee's salary balance upto date.",
+  "main": "index.js",
+  "scripts": {
+    "build:scheduler": "tsc -p tsconfig.scheduler.json",
+    "build:worker": "tsc -p tsconfig.worker.json",
+    "build": "npm run build:scheduler && npm run build:worker",
+    "dev:scheduler": "tsc-watch -p tsconfig.scheduler.json --onSuccess \"node dist/scheduler/index.js\"",
+    "dev:worker": "tsc-watch -p tsconfig.worker.json --onSuccess \"node dist/worker/index.js\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "eslint": "^9.17.0",
+    "globals": "^15.14.0",
+    "tsc-watch": "^6.2.1",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.19.1"
+  },
+  "dependencies": {
+    "@types/node-schedule": "^2.1.7"
+  }
+}
