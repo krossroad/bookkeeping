@@ -27,35 +27,37 @@ enum SalaryReleaseType {
 }
 
 model IdentityVerification {
-  id           String   @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
 }
 
 model SalaryRelease {
-  id          String   @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
 }
 
 model Employee {
-  id         String   @id @default(uuid()) @db.Uuid
-  firstName  String
-  lastName   String
-  email      String   @unique
-  salary     Int
-  companyId  String @db.Uuid
-  company    Company  @relation(fields: [companyId], references: [id])
-  idType     IdType   @default(PASSPORT)
-  idNumber   String
-  releaseType SalaryReleaseType @default(MONTHLY)
-  createdAt  DateTime @db.Timestamptz(0) @default(now())
-  uppdatedAt  DateTime @db.Timestamptz(0) @default(now()) @updatedAt
-  deletedAt DateTime? @db.Timestamptz(0)
+  id                  String            @id @default(uuid()) @db.Uuid
+  firstName           String
+  lastName            String
+  email               String            @unique
+  salary              Int
+  companyId           String            @db.Uuid
+  company             Company           @relation(fields: [companyId], references: [id])
+  idType              IdType            @default(PASSPORT)
+  idNumber            String
+  releaseType         SalaryReleaseType @default(MONTHLY)
+  createdAt           DateTime          @default(now()) @db.Timestamptz(0)
+  uppdatedAt          DateTime          @default(now()) @updatedAt @db.Timestamptz(0)
+  deletedAt           DateTime?         @db.Timestamptz(0)
+  salaryAccountedTill DateTime @db.Date
+  salaryBalance       Int               @default(0)
 
   @@map("employees")
 }
 
 model Company {
-  id          String   @id @default(uuid()) @db.Uuid
-  name        String
-  employees  Employee[]
+  id        String     @id @default(uuid()) @db.Uuid
+  name      String
+  employees Employee[]
 
   @@map("companies")
 }
