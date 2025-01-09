@@ -3,5 +3,8 @@
   "compilerOptions": {
     "outDir": "./dist"
   },
-  "include": ["src/scheduler/**/*"]
+  "include": [
+      "src/scheduler/**/*",
+      "src/common/**/*"
+  ]
 }

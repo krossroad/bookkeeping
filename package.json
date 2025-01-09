@@ -8,7 +8,7 @@
     "build:worker": "tsc -p tsconfig.worker.json",
     "build": "npm run build:scheduler && npm run build:worker",
     "dev:scheduler": "tsc-watch -p tsconfig.scheduler.json --onSuccess \"node dist/scheduler/index.js\"",
-    "dev:worker": "tsc-watch -p tsconfig.worker.json --onSuccess \"node dist/worker/index.js\""
+    "dev:worker": "tsc-watch -p tsconfig.worker.json --onSuccess \"node dist/worker/worker/index.js\""
   },
   "keywords": [],
   "author": "",
@@ -25,8 +25,11 @@
     "typescript-eslint": "^8.19.1"
   },
   "dependencies": {
+    "@aws-sdk/client-sqs": "^3.723.0",
     "@prisma/client": "^6.1.0",
     "@types/node-schedule": "^2.1.7",
+    "dotenv": "^16.4.7",
+    "log": "^6.3.2",
     "node-schedule": "^2.1.1"
   }
 }

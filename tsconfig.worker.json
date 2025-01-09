@@ -3,5 +3,8 @@
   "compilerOptions": {
     "outDir": "./dist/worker"
   },
-  "include": ["src/worker/**/*"]
+  "include": [
+      "src/worker/**/*",
+      "src/common/**/*"
+  ]
 }
