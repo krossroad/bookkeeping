@@ -4,7 +4,6 @@ import { EmployeeRepoInterface } from '../repo/contracts';
 const RELEASE_TYPE_MONTHLY = 'MONTHLY';
 const RELEASE_TYPE_DAILY = 'DAILY';
 
-
 export class BookkeepingService {
   #employeeRepo: EmployeeRepoInterface;
 
@@ -24,13 +23,13 @@ export class BookkeepingService {
     }
   }
 
-  updateEmployeeBalance(employee: Employee): Promise<void> {
+  async updateEmployeeBalance(employee: Employee): Promise<void> {
     const calculator = this._calculateSalary(employee.releaseType, employee.salary);
 
-    return this._makeEntry(employee, calculator);
+    return await this._makeEntry(employee, calculator);
   }
 
-  _makeEntry(employee: Employee, dailySalary: number): Promise<void> {
+  async _makeEntry(employee: Employee, dailySalary: number): Promise<void> {
     return this.#employeeRepo
       .updateBalance(employee.id, dailySalary)
       .then(() => {

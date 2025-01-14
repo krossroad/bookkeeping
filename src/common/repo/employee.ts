@@ -9,27 +9,28 @@ export class EmployeeRepo implements EmployeeRepoInterface {
     this.#prismaClient = prismaClient;
   }
 
-  findById(id: string): Promise<Employee | null> {
-    return this.#prismaClient.employee.findUnique({ where: { id } });
-  }
-
-  updateBalance(employeeId: string, amount: number): Promise<Employee | null> {
+  async updateBalance(
+    employeeId: string,
+    amount: number,
+  ): Promise<Employee | null> {
     const now = new Date();
-    const queryDate = new Date(now.toLocaleDateString() + ' UTC');
-    return this.#prismaClient.employee.update({
-      where: {
-        id: employeeId,
-        salaryAccountedTill: {
-          lt: queryDate,
-        }
-      },
-      data: {
-        salaryBalance: { increment: amount },
-        salaryAccountedTill: queryDate,
-      }
-    }).catch((error) => {
-      console.error("Error updating employee balance:");
-      return null;
-    });
+    const queryDate = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+    return this.#prismaClient.employee
+      .update({
+        where: {
+          id: employeeId,
+          salaryAccountedTill: {
+            lt: queryDate,
+          },
+        },
+        data: {
+          salaryBalance: { increment: amount },
+          salaryAccountedTill: queryDate,
+        },
+      })
+      .catch(() => {
+        console.error("Error updating employee balance:");
+        return null;
+      });
   }
-};
+}
