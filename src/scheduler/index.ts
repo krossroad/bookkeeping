@@ -37,5 +37,5 @@ async function createSQSQueue() {
 
 (async () => {
   const scheduler = new AppScheduler(prisma, sqsClient, await createSQSQueue());
-  schedule.scheduleJob('0,10,30,40,50 * * * * *', () => scheduler.runScheduledTasks());
+  schedule.scheduleJob('0 0 0 * * *', () => scheduler.runScheduledTasks());
 })();
