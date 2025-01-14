@@ -46,7 +46,7 @@ model Employee {
   idNumber            String
   releaseType         SalaryReleaseType @default(MONTHLY)
   createdAt           DateTime          @default(now()) @db.Timestamptz(0)
-  uppdatedAt          DateTime          @default(now()) @updatedAt @db.Timestamptz(0)
+  updatedAt          DateTime          @default(now()) @updatedAt @db.Timestamptz(0)
   deletedAt           DateTime?         @db.Timestamptz(0)
   salaryAccountedTill DateTime @db.Date
   salaryBalance       Int               @default(0)
