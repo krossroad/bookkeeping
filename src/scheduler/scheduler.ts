@@ -23,6 +23,7 @@ export class AppScheduler {
 
   async queueEmployee(employee: Employee) {
     const command = new SendMessageCommand({
+      // MessageDeduplicationId: employee.id, // Use in production to avoid duplicate messages
       QueueUrl: this.queueUrl,
       MessageBody: JSON.stringify(employee),
       DelaySeconds: 0,
@@ -46,7 +47,7 @@ export class AppScheduler {
     let skip = 0;
 
     const currentDate = new Date();
-    const today = new Date(currentDate.toLocaleDateString() + ' UTC');
+    const today = new Date(Date.UTC(currentDate.getUTCFullYear(), currentDate.getUTCMonth(), currentDate.getUTCDate()));
 
     while (hasMoreTasks) {
       const employees: Employee[] = await this.prisma.employee.findMany({
