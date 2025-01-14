@@ -6,6 +6,6 @@ export interface BookkeepingRepoIntreface {
 }
 
 export interface EmployeeRepoInterface {
-  updateBalance(employeeId: string, amount: number): Promise<Employee | null>;
+  updateBalance(employeeId: string, amount: number, recordDate: Date): Promise<Employee | null>;
 }
 

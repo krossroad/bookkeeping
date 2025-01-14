@@ -12,11 +12,10 @@ export class EmployeeRepo implements EmployeeRepoInterface {
   async updateBalance(
     employeeId: string,
     amount: number,
+    queryDate: Date
   ): Promise<Employee | null> {
-    const now = new Date();
-    const queryDate = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
-    return this.#prismaClient.employee
-      .update({
+    try {
+      return await this.#prismaClient.employee.update({
         where: {
           id: employeeId,
           salaryAccountedTill: {
@@ -27,10 +26,10 @@ export class EmployeeRepo implements EmployeeRepoInterface {
           salaryBalance: { increment: amount },
           salaryAccountedTill: queryDate,
         },
-      })
-      .catch(() => {
-        console.error("Error updating employee balance:");
-        return null;
       });
+    } catch (error) {
+      console.error("Error updating employee balance:");
+      return null;
+    }
   }
 }

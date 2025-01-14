@@ -26,12 +26,25 @@ export class BookkeepingService {
   async updateEmployeeBalance(employee: Employee): Promise<void> {
     const calculator = this._calculateSalary(employee.releaseType, employee.salary);
 
-    return await this._makeEntry(employee, calculator);
+    const now = new Date();
+    const queryDate = new Date(now.toLocaleDateString() + ' UTC');
+
+    if (this.isHoliday(queryDate)) {
+      console.log("Today is a holiday. Skipping salary update", { "employeeId": employee.id });
+      return;
+    }
+
+    return await this._makeEntry(employee, calculator, queryDate);
   }
 
-  async _makeEntry(employee: Employee, dailySalary: number): Promise<void> {
+  isHoliday(recordDate: Date): boolean {
+    // Check if the date is a holiday
+    return false;
+  }
+
+  async _makeEntry(employee: Employee, dailySalary: number, recordDate: Date): Promise<void> {
     return this.#employeeRepo
-      .updateBalance(employee.id, dailySalary)
+      .updateBalance(employee.id, dailySalary, recordDate)
       .then(() => {
         console.log("Salary balance updated", { "employeeId": employee.id });
       });

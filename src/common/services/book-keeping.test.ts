@@ -66,10 +66,13 @@ describe("BookkeepingService", () => {
       const dailySalary = Math.round(employee.salary / 30);
 
       await bookkeepingService.updateEmployeeBalance(employee);
+      const now = new Date();
+      const queryDate = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
 
       expect(employeeRepoMock.updateBalance).toHaveBeenCalledWith(
         employee.id,
         dailySalary,
+        queryDate
       );
     });
 

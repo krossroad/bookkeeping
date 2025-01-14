@@ -48,7 +48,8 @@ describe("EmployeeRepo", () => {
         .fn()
         .mockResolvedValue(updatedEmployee);
 
-      const result = await employeeRepo.updateBalance(employeeId, amount);
+      const queryDate = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+      const result = await employeeRepo.updateBalance(employeeId, amount, queryDate);
 
       expect(prismaClient.employee.update).toHaveBeenCalledWith({
         where: {
@@ -73,7 +74,8 @@ describe("EmployeeRepo", () => {
         .fn()
         .mockRejectedValue(new Error("Update error"));
 
-      const result = await employeeRepo.updateBalance(employeeId, amount);
+      const queryDate = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+      const result = await employeeRepo.updateBalance(employeeId, amount, queryDate);
 
       expect(prismaClient.employee.update).toHaveBeenCalledWith({
         where: {
